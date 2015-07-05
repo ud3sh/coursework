@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>C171A309-BA0B-46C9-AD9B-6160B6E7A426</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Caculator</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>E5A2308E4E91ECC3B45C63887C9529627CE3D573</key>
+		<string>github.com:ud3sh/coursework.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>standford-cs139p-developing-iOS-8-apps-with-Swift/Caculator/Caculator.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>E5A2308E4E91ECC3B45C63887C9529627CE3D573</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:ud3sh/coursework.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>E5A2308E4E91ECC3B45C63887C9529627CE3D573</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E5A2308E4E91ECC3B45C63887C9529627CE3D573</string>
+			<key>IDESourceControlWCCName</key>
+			<string>coursework</string>
+		</dict>
+	</array>
+</dict>
+</plist>
