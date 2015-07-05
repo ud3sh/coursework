@@ -105,6 +105,19 @@ res2: fpinscala.datastructures.List[Int] = Cons(4,Cons(4,Cons(6,Nil)))
       case Cons(head, tail) => Cons(head, init(tail))
     }
   }
+  
+  //exercise 3.7
+  /* no because fold right must traverse the entire list before evaluating anything. The second argument of the passed in function requires foldRight to be evaluated
+     recall:
+     def foldRight[A,B](as: List[A], z: B)(f: (A, B) => B): B =
+		as match {
+		case Nil => z
+		case Cons(x, xs) => f(x, foldRight(xs, z)(f))
+	}
+	No matter how f is defined foldRight will always need to be evaluated
+  */
+  //exercise 3.8
+  //you get back the original list
 
   //exercise 3.9
   def length[A](l: List[A]): Int = {
@@ -135,11 +148,89 @@ res2: fpinscala.datastructures.List[Int] = Cons(4,Cons(4,Cons(6,Nil)))
     foldLeft(xs, 1)((acc,_)=>(acc+1))
   }
   
+  //exercise 3.12
   def reverse[A](xs: List[A]): List[A] = {
     foldLeft(xs, List[A]())((tail,h)=>Cons(h, tail))
   }
+  
+  //excercise 3.13a (try again)
+  def foldLeftViaFoldRight[A,B](xs: List[A], z: B)(f: (B, A) => B): B = {
+    foldRight(reverse(xs), z)((b,a)=>f(a,b))
+  }
+  
+//  def foldRightViaFoldLeft[A,B](xs: List[A], z: B)(f: (A, B) => B): B = {
+//  }
+  
+  //excercise 3.14
 
-  def map[A,B](l: List[A])(f: A => B): List[B] = sys.error("todo")
+  def appendViaFoldRight[A](xs1: List[A], xs2:List[A]): List[A] = {
+    foldRight(xs1, xs2)((i, acc)=> Cons(i, acc))
+  } 
+  
+  def appendViaFoldLeft[A](xs1: List[A], xs2:List[A]): List[A] = {
+    foldLeft(reverse(xs1), xs2)((acc, i)=> Cons(i, acc))
+  } 
+  
+  //excercise 3.15
+  def concat[A](l: List[List[A]]): List[A] = {
+    foldLeft(l, List[A]())((acc, nextList)=>append(acc, nextList))
+  }
+  
+  //excercise 3.15-alternative
+  def concatViaFoldRight[A](l: List[List[A]]): List[A] = {
+    foldRight(l, List[A]())(append)
+  }
+  
+  
+  //excercise 3.16
+  def addOne(xs:List[Int]):List[Int] = {
+    foldRight(xs, List():List[Int])((i, tail)=> Cons(i+1, tail))
+  }
+  
+  //excercise 3.17
+  def doubleToString(xs:List[Double]):List[String] = {
+    foldRight(xs, List():List[String])((i, tail) => Cons(i.toString, tail))
+  }
+
+  //excercise 3.18
+  def map[A,B](xs: List[A])(f: A => B): List[B] = {
+    foldRight(xs, List():List[B])((i, tail) => Cons(f(i), tail))
+  }
+  
+  //excercise 3.19
+  def filter[A](xs: List[A])(f: A => Boolean): List[A] = {
+     foldRight(xs, List():List[A])( (i, tail) => if (f(i)) Cons(i, tail) else tail)
+  }
+  
+  //excercise 3.20
+  def flatMap[A,B](xs: List[A])(f: A => List[B]): List[B] = {
+    foldRight(xs, List():List[B])((i, tail) => append(f(i), tail))  
+  }
+  
+  //excercise 3.21
+  def filterUsingFlatMap[A](xs: List[A])(f: A => Boolean): List[A] = {
+    flatMap(xs)( (a)=> if(f(a)) List(a) else List())
+  }
+  
+  //excercise 3.22
+  def addIntLists(xs:List[Int], ys:List[Int]):List[Int] = {
+     (xs, ys) match {
+       case (Cons(a, xs1), Cons(b, ys1)) => Cons(a+b, addIntLists(xs1, ys1))
+       case (Nil, Cons(b, ys1)) => Cons(b, ys1)
+       case (Cons(a, xs1), Nil) => Cons(a, xs1)
+       case (Nil, Nil) => Nil
+     }
+  }
+  
+  //excercise 3.23
+  def zipWith[T](xs:List[T], ys:List[T])(f: (T,T) => T):List[T] = {
+     (xs, ys) match {
+       case (Nil, _) => Nil
+       case (_, Nil) => Nil
+       case (Cons(a, xs1), Cons(b, ys1)) => Cons(f(a,b), zipWith(xs1, ys1)(f))
+     }
+  }
+
 }
 
 
