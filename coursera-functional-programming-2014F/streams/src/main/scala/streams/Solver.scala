@@ -10,38 +10,30 @@ trait Solver extends GameDef {
   /**
    * Returns `true` if the block `b` is at the final position
    */
-  def done(b: Block): Boolean = (goal == b.b1 && goal == b.b2)
+  def done(b: Block): Boolean = {
+    (goal == b.b1 && goal == b.b2)
+  }
 
   /**
    * This function takes two arguments: the current block `b` and
    * a list of moves `history` that was required to reach the
    * position of `b`.
-   *
+   * 
    * The `head` element of the `history` list is the latest move
    * that was executed, i.e. the last move that was performed for
    * the block to end up at position `b`.
-   *
+   * 
    * The function returns a stream of pairs: the first element of
    * the each pair is a neighboring block, and the second element
    * is the augmented history of moves required to reach this block.
-   *
+   * 
    * It should only return valid neighbors, i.e. block positions
    * that are inside the terrain.
    */
   def neighborsWithHistory(b: Block, history: List[Move]): Stream[(Block, List[Move])] = {
-    history match {
-      case Nil => Stream.Empty
-      case x :: xs => {
-        val previousBlock = x match {
-          case Up => b.down;
-          case Left => b.right
-          case Right => b.left
-          case Down => b.up
-        }
-        (previousBlock, xs) #:: neighborsWithHistory(previousBlock, xs)
-      }
-    }
+    b.legalNeighbors.toStream.map{case(nBlock, nMove)=> ((nBlock, nMove::history))}
   }
+  
 
   /**
    * This function returns the list of neighbors without the block
@@ -77,14 +69,15 @@ trait Solver extends GameDef {
    * construct the correctly sorted stream.
    */
   def from(initial: Stream[(Block, List[Move])],
-           explored: Set[Block]): Stream[(Block, List[Move])] = {
-
-	  
-      val neighbours = newNeighborsOnly(initial, explored)
-      neighbours match {
-        case Stream.Empty => initial
-      }
-
+    explored: Set[Block]): Stream[(Block, List[Move])] = {    
+    //initial.head -> unexplored-neigbour-1
+    //initial.head -> unexplored-neighbour-2
+    //intiial.head -> unexplored-neighbour-3
+//    val neighbours = newNeighborsOnly(initial.head._1.legalNeighbors.toStream, explored)
+//    neighbours match {
+//      case Stream.Empty => initial
+//      case _ => initial
+//    }
   }
 
   /**
