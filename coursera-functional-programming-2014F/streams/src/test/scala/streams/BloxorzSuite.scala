@@ -40,39 +40,40 @@ class BloxorzSuite extends FunSuite {
     val optsolution = List(Right, Right, Down, Right, Right, Right, Down)
   }
 
-  trait Level2 extends SolutionChecker {
-      /* terrain for level 1*/
-
-    val level =
-    """ooo-------
-      |oooooo----
-      |ooooooooo-
-      |-oooSooooo
-      |-----ooToo
-      |------ooo-""".stripMargin
-
-    val optsolution = List(Right, Right, Down, Right, Right, Right, Down)
+  test("neigbours with history"){
+    new Level1 {
+      val res = neighborsWithHistory(Block(Pos(1,1),Pos(1,1)), List(Left,Up)).toSet
+      assert(res == Set(
+						  (Block(Pos(1,2),Pos(1,3)), List(Right,Left,Up)),
+						  (Block(Pos(2,1),Pos(3,1)), List(Down,Left,Up))
+						)       
+      )
+    }
+	  
   }
 
+  test("new neigbours only") {
+    new Level1 {
+      val res = newNeighborsOnly(
+        Set(
+          (Block(Pos(1, 2), Pos(1, 3)), List(Right, Left, Up)),
+          (Block(Pos(2, 1), Pos(3, 1)), List(Down, Left, Up))).toStream,
+        Set(Block(Pos(1, 2), Pos(1, 3)), Block(Pos(1, 1), Pos(1, 1))))
+      assert(res == Set(
+        (Block(Pos(2, 1), Pos(3, 1)), List(Down, Left, Up))).toStream)
+    }
+  }
+  
   test("terrain function level 1") {
     new Level1 {
-      println(level)
       assert(terrain(Pos(0,0)), "0,0")
-      assert(terrain(Pos(0,1)), "0,1")
-      assert(terrain(Pos(0,2)), "0,2")
-      assert(!terrain(Pos(0,3)), "0,3")
       assert(!terrain(Pos(4,11)), "4,11")
-      assert(terrain(Pos(4,9)), "4,9")
     }
   }
 
   test("findChar level 1") {
     new Level1 {
       assert(startPos == Pos(1,1))
-    }
-
-    new Level2 {
-      assert(startPos == Pos(3,4))
     }
   }
 
